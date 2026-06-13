@@ -21,7 +21,7 @@ const approvedDomains = [
   'migration.gov.gr',
   'stratologia.gr',
 ]
-const filesToCheck = ['src/main.jsx', 'src/data/articles.js', 'src/styles.css', 'README.md']
+const filesToCheck = ['src/app.js', 'src/data/articles.js', 'src/styles.css', 'README.md', 'index.html']
 const errors = []
 
 for (const file of filesToCheck) {

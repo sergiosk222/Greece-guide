@@ -4,11 +4,11 @@ Greece Guide — бесплатный справочник для жителей
 
 ## Технический стек
 
-- Vite
-- React
-- Tailwind CSS
-- Framer Motion / motion-style анимации
-- Без backend, AI внутри сайта и платных сервисов
+- Статический frontend без backend
+- Vanilla JavaScript modules
+- CSS в стиле Tailwind/shadcn: utility-inspired tokens, responsive layout, focus states
+- Motion-style CSS-анимации
+- Без AI внутри сайта и платных сервисов
 
 ## Установка зависимостей
 
@@ -22,7 +22,7 @@ npm install
 npm run dev
 ```
 
-Откройте адрес, который покажет Vite, обычно `http://localhost:5173`.
+Откройте адрес, который покажет локальный сервер, обычно `http://localhost:5173`.
 
 ## Проверки перед публикацией
 
@@ -80,7 +80,7 @@ npm run build
 
 Проект подготовлен для GitHub Pages:
 
-- `vite.config.js` меняет `base` на `/Greece-guide/`, если сборка запускается с `GITHUB_PAGES=true`.
+- `scripts/build.mjs` подготавливает папку `dist` и меняет путь к JS на `/Greece-guide/`, если сборка запускается с `GITHUB_PAGES=true`.
 - `.github/workflows/deploy.yml` устанавливает зависимости, запускает lint, собирает проект и публикует папку `dist` через GitHub Pages.
 
 Шаги:
@@ -99,6 +99,6 @@ GITHUB_PAGES=true npm run build
 ## Публикация на Vercel
 
 1. Импортируйте репозиторий в Vercel.
-2. Framework Preset: `Vite`.
+2. Framework Preset: `Other`.
 3. Build command: `npm run build`.
 4. Output directory: `dist`.
