@@ -2,6 +2,14 @@
 
 Greece Guide — бесплатный справочник для жителей Греции. Он объясняет официальные греческие бюрократические процедуры простым языком и ссылается только на официальные источники.
 
+## Технический стек
+
+- Vite
+- React
+- Tailwind CSS
+- Framer Motion / motion-style анимации
+- Без backend, AI внутри сайта и платных сервисов
+
 ## Установка зависимостей
 
 ```bash
@@ -16,12 +24,14 @@ npm run dev
 
 Откройте адрес, который покажет Vite, обычно `http://localhost:5173`.
 
-## Сборка
+## Проверки перед публикацией
 
 ```bash
+npm run lint
 npm run build
-npm run preview
 ```
+
+`npm run lint` проверяет структуру статей, обязательные секции, официальные домены источников и правило: новые статьи остаются в статусе `draft` до ручной проверки владельца.
 
 ## Как добавить статью
 
@@ -68,15 +78,23 @@ npm run preview
 
 ## Публикация на GitHub Pages
 
-1. Убедитесь, что репозиторий называется `Greece-guide` или измените `base` в `vite.config.js`.
-2. Соберите проект для GitHub Pages:
+Проект подготовлен для GitHub Pages:
+
+- `vite.config.js` меняет `base` на `/Greece-guide/`, если сборка запускается с `GITHUB_PAGES=true`.
+- `.github/workflows/deploy.yml` устанавливает зависимости, запускает lint, собирает проект и публикует папку `dist` через GitHub Pages.
+
+Шаги:
+
+1. В GitHub откройте `Settings → Pages`.
+2. В `Build and deployment` выберите `GitHub Actions`.
+3. Убедитесь, что основная ветка называется `main`, или измените ветку в `.github/workflows/deploy.yml`.
+4. Запустите workflow `Deploy to GitHub Pages` вручную или через push в `main`.
+
+Локальная сборка для GitHub Pages:
 
 ```bash
 GITHUB_PAGES=true npm run build
 ```
-
-3. Опубликуйте папку `dist` через GitHub Actions или пакет `gh-pages`.
-4. В настройках GitHub Pages выберите источник публикации.
 
 ## Публикация на Vercel
 
