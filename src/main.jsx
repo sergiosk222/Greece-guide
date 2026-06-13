@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Search, ShieldCheck, AlertTriangle, FileText, ExternalLink, Send, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { articles, categories } from './data/articles.js';
+import './index.css';
 import './styles.css';
 
 const statusLabels = {
@@ -100,12 +101,13 @@ function App() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Все');
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [infoPage, setInfoPage] = useState(null);
 
   const filteredArticles = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return articles.filter((article) => {
       const matchesCategory = category === 'Все' || article.category === category;
-      const matchesQuery = !normalized || [article.title, article.summary, article.category].join(' ').toLowerCase().includes(normalized);
+      const matchesQuery = !normalized || [article.title, article.summary, article.category, article.sourceName].join(' ').toLowerCase().includes(normalized);
       return matchesCategory && matchesQuery;
     });
   }, [query, category]);
@@ -114,12 +116,33 @@ function App() {
     return <ArticleView article={selectedArticle} onBack={() => setSelectedArticle(null)} />;
   }
 
+  if (infoPage) {
+    const pages = {
+      about: ['О проекте', 'Greece Guide объясняет официальные процедуры простым языком. Это бесплатный сайт без backend, регистрации и AI внутри сайта.'],
+      disclaimer: ['Важно', 'Greece Guide не является юридической консультацией. Перед действием всегда проверяйте актуальность на официальном сайте.'],
+      suggest: ['Предложить исправление', 'Пока форма работает через почту. Позже можно подключить бесплатную форму или GitHub Issues.']
+    };
+    return (
+      <main className="page article-page">
+        <button className="back-button" onClick={() => setInfoPage(null)}>← На главную</button>
+        <article className="article-shell">
+          <h1>{pages[infoPage][0]}</h1>
+          <p className="lead">{pages[infoPage][1]}</p>
+        </article>
+      </main>
+    );
+  }
+
   return (
     <div>
       <header className="hero">
         <nav className="nav">
           <div className="logo"><ShieldCheck size={24} /> Greece Guide</div>
-          <a href="mailto:hello@greece-guide.local" className="nav-link">Предложить исправление</a>
+          <div className="nav-menu">
+            <button className="nav-tab" onClick={() => setInfoPage('about')}>О проекте</button>
+            <button className="nav-tab" onClick={() => setInfoPage('disclaimer')}>Важно</button>
+            <button className="nav-tab" onClick={() => setInfoPage('suggest')}>Исправление</button>
+          </div>
         </nav>
 
         <motion.div className="hero-content" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }}>
@@ -175,7 +198,7 @@ function App() {
             <h2>Нашли ошибку или хотите предложить тему?</h2>
             <p>Напишите, какую инструкцию добавить или что исправить. Черновики публикуются только после проверки.</p>
           </div>
-          <a className="primary-button" href="mailto:hello@greece-guide.local"><Send size={18} /> Предложить исправление</a>
+          <button className="primary-button" onClick={() => setInfoPage('suggest')}><Send size={18} /> Предложить исправление</button>
         </section>
       </main>
     </div>
