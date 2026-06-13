@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./nav.css";
+@import "./mobile.css";
 
 body {
   margin: 0;
